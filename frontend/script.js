@@ -29,18 +29,26 @@ searchButton.addEventListener('click', function() {
         });
 });
 
-// функция для отображения данных
+
+// функция для отображения данных в виде карточки
+
 function displayResults(data) {
-    resultsDiv.innerHTML = ''; // очистка предыдущих результатов
-
-    if (data.length === 0) {
-        resultsDiv.innerHTML = 'Ничего не найдено.';
-        return;
-    }
-
     data.forEach(item => {
-        const div = document.createElement('div');
-        div.textContent = `Название: ${item.e_name} | Цех: ${item.l_id.l_shop} | Участок: ${item.l_id.l_area}`;
-        resultsDiv.appendChild(div);
+        const card = document.createElement('div');
+        card.classList.add('equipment-card');
+        card.innerHTML = `
+            <h3>${item.e_name}</h3>
+            <p><strong>Местоположение:</strong> ${item.l_id.l_shop} - ${item.l_id.l_area}</p>
+            <p><strong>Тип оборудования:</strong> ${item.t_type.t_type}</p>
+        `;
+
+        // вставляем новую карточку в самое начало
+        resultsDiv.prepend(card);
+
+        // eсли карточек стало больше 5 — удаляем последнюю
+        const allCards = resultsDiv.querySelectorAll('.equipment-card');
+        if (allCards.length > 5) {
+            allCards[allCards.length - 1].remove();
+        }
     });
 }

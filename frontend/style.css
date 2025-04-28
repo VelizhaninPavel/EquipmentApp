@@ -24,3 +24,33 @@ body {
     padding: 20px;
     border-radius: 8px;
 }
+
+
+
+/* стили для карточки результата (JS) */
+
+.equipment-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 12px 0;
+    background-color: #f9f9f9;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.equipment-card:hover {
+    transform: scale(1.02);
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.equipment-card h3 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.equipment-card p {
+    margin: 4px 0;
+    color: #555;
+}
