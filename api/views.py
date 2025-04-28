@@ -1,4 +1,5 @@
 from rest_framework import generics, permissions
+from rest_framework import filters
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth.models import User
@@ -15,7 +16,7 @@ from .serializers import (
 )
 
 # Пользователи
-class UsersList(generics.ListCreateAPIView):  # Поддерживает GET и POST
+class UsersList(generics.ListCreateAPIView):
     queryset = Users.objects.all()
     serializer_class = UsersSerializer
     permission_classes = [permissions.AllowAny]
@@ -39,12 +40,14 @@ class UsersDelete(generics.DestroyAPIView):
     permission_classes = [permissions.AllowAny]
 
 # Оборудование
-class EquipmentList(generics.ListAPIView):  # Изменяем на ListAPIView (только GET)
+class EquipmentList(generics.ListAPIView):
     queryset = Equipment.objects.all()
     serializer_class = EquipmentSerializer
     permission_classes = [permissions.AllowAny]
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['E_NAME']
 
-class EquipmentCreate(generics.CreateAPIView):  # Добавляем отдельное представление для создания
+class EquipmentCreate(generics.CreateAPIView):
     queryset = Equipment.objects.all()
     serializer_class = EquipmentSerializer
     permission_classes = [permissions.AllowAny]
@@ -53,7 +56,7 @@ class EquipmentDetail(generics.RetrieveAPIView):
     queryset = Equipment.objects.all()
     serializer_class = EquipmentSerializer
     lookup_field = 'E_ID'
-    permission_classes = [permissions.AllowAny]  # GET доступен всем
+    permission_classes = [permissions.AllowAny]
 
 class EquipmentUpdate(generics.UpdateAPIView):
     queryset = Equipment.objects.all()
@@ -64,7 +67,7 @@ class EquipmentUpdate(generics.UpdateAPIView):
     def get_permissions(self):
         if self.request.user.is_staff:
             return [permissions.AllowAny()]
-        return [permissions.AllowAny()]  # PATCH для Admin и Users
+        return [permissions.AllowAny()]
 
 class EquipmentDelete(generics.DestroyAPIView):
     queryset = Equipment.objects.all()
@@ -74,49 +77,50 @@ class EquipmentDelete(generics.DestroyAPIView):
     def get_permissions(self):
         if self.request.user.is_staff:
             return [permissions.AllowAny()]
-        return [permissions.AllowAny()]  # DELETE для Admin и Users
+        return [permissions.AllowAny()]
 
 # Типы оборудования
 class EquipmentTypeList(generics.ListCreateAPIView):
     queryset = Equipment_Type.objects.all()
     serializer_class = EquipmentTypeSerializer
-    permission_classes = [permissions.AllowAny]  # GET доступен всем
+    permission_classes = [permissions.AllowAny]
 
     def get_permissions(self):
         if self.request.method == 'POST':
-            return [permissions.AllowAny()]  # POST для Admin и Users
+            return [permissions.AllowAny()]
         return [permissions.AllowAny()]
 
 class EquipmentTypeDetail(generics.RetrieveAPIView):
     queryset = Equipment_Type.objects.all()
     serializer_class = EquipmentTypeSerializer
     lookup_field = 'T_TYPE'
-    permission_classes = [permissions.AllowAny]  # GET доступен всем
+    permission_classes = [permissions.AllowAny]
 
 class EquipmentTypeUpdate(generics.UpdateAPIView):
     queryset = Equipment_Type.objects.all()
     serializer_class = EquipmentTypeSerializer
     lookup_field = 'T_TYPE'
-    permission_classes = [permissions.AllowAny]  # PATCH только для Admin
+    permission_classes = [permissions.AllowAny]
 
 class EquipmentTypeDelete(generics.DestroyAPIView):
     queryset = Equipment_Type.objects.all()
     serializer_class = EquipmentTypeSerializer
     lookup_field = 'T_TYPE'
-    permission_classes = [permissions.AllowAny]  # DELETE только для Admin
+    permission_classes = [permissions.AllowAny]
 
 
 # Паспорта (Passport)
-class PassportList(generics.ListCreateAPIView):  # Поддерживает GET и POST
+class PassportList(generics.ListCreateAPIView):
     queryset = Passport.objects.all()
     serializer_class = PassportSerializer
     permission_classes = [permissions.AllowAny]
+
 
 class PassportDetail(generics.RetrieveAPIView):
     queryset = Passport.objects.all()
     serializer_class = PassportSerializer
     lookup_field = 'P_ID'
-    permission_classes = [permissions.AllowAny]  # GET доступен всем
+    permission_classes = [permissions.AllowAny]
 
 class PassportUpdate(generics.UpdateAPIView):
     queryset = Passport.objects.all()
@@ -126,7 +130,7 @@ class PassportUpdate(generics.UpdateAPIView):
     def get_permissions(self):
         if self.request.user.is_staff:
             return [permissions.AllowAny()]
-        return [permissions.AllowAny()]  # PATCH для Admin и Users
+        return [permissions.AllowAny()]
 
 class PassportDelete(generics.DestroyAPIView):
     queryset = Passport.objects.all()
@@ -136,16 +140,16 @@ class PassportDelete(generics.DestroyAPIView):
     def get_permissions(self):
         if self.request.user.is_staff:
             return [permissions.AllowAny()]
-        return [permissions.AllowAny()]  # DELETE для Admin и Users
+        return [permissions.AllowAny()]
 
 # Журнал управления
 class ManagementJournalList(generics.ListAPIView):
     queryset = Management_Journal.objects.all()
     serializer_class = ManagementJournalSerializer
-    permission_classes = [permissions.AllowAny]  # Только для Admin
+    permission_classes = [permissions.AllowAny]
 
 # Результаты поиска (SearchResult)
-class SearchResultList(generics.ListAPIView):  # Добавляем класс SearchResultList
+class SearchResultList(generics.ListAPIView):
     queryset = SearchResult.objects.all()
     serializer_class = SearchResultSerializer
     permission_classes = [permissions.AllowAny]
@@ -165,32 +169,32 @@ class SearchResultUpdate(generics.UpdateAPIView):
 class LocationList(generics.ListAPIView):
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
-    permission_classes = [permissions.AllowAny]  # GET доступен всем
+    permission_classes = [permissions.AllowAny]
 
 
 # Представления для Administrator
 class AdministratorList(generics.ListCreateAPIView):
     queryset = Administrator.objects.all()
     serializer_class = AdministratorSerializer
-    permission_classes = [permissions.AllowAny]  # Доступ только для администраторов
+    permission_classes = [permissions.AllowAny]
 
 class AdministratorDetail(generics.RetrieveAPIView):
     queryset = Administrator.objects.all()
     serializer_class = AdministratorSerializer
     lookup_field = 'a_id'
-    permission_classes = [permissions.AllowAny]  # Доступ только для администраторов
+    permission_classes = [permissions.AllowAny]
 
 class AdministratorUpdate(generics.UpdateAPIView):
     queryset = Administrator.objects.all()
     serializer_class = AdministratorSerializer
     lookup_field = 'a_id'
-    permission_classes = [permissions.AllowAny]  # Доступ только для администраторов
+    permission_classes = [permissions.AllowAny]
 
 class AdministratorDelete(generics.DestroyAPIView):
     queryset = Administrator.objects.all()
     serializer_class = AdministratorSerializer
     lookup_field = 'a_id'
-    permission_classes = [permissions.AllowAny]  # Доступ только для администраторов
+    permission_classes = [permissions.AllowAny]
 
 
 class LocationCreate(generics.CreateAPIView):

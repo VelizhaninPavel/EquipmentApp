@@ -40,10 +40,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',  # Для токенов
     'api',
+    'corsheaders',    # для django-cors-headers
 ]
 # ЙОООООУУУУУУУУУУУ
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',    # для django-cors-headers
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -150,3 +152,5 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ],
 }
+
+CORS_ALLOW_ALL_ORIGINS = True    # для django-cors-headers
