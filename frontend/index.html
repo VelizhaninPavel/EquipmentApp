@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Каталог оборудования</title>
+    <link rel="stylesheet" href="style.css">  <!-- подключение CSS -->
+</head>
+<body>
+
+    <h1>Каталог оборудования</h1>
+
+    <div id="equipment-search-container">
+        <input type="text" id="equipment-search-input" placeholder="Введите название оборудования...">
+        <button id="equipment-search-button">Поиск</button>
+        <a href="#" id="fullListLink">Полный список оборудования</a>
+    </div>
+
+    <div id="equipment-results-container">
+        <!-- сюда будут выводиться карточки поиска -->
+    </div>
+
+    <!-- Модальное окно полного списка -->
+    <div id="fullListModal">
+        <div id="fullListModalContent">
+            <span id="fullListModalClose" class="modal-close">&times;</span>
+            <h2>Полный список оборудования</h2>
+            <div id="fullListResults"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>  <!-- подключение JS -->
+</body>
+</html>
