@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Каталог оборудования</title>
-    <link rel="stylesheet" href="style.css">  <!-- поключение CSS -->
+    <link rel="stylesheet" href="style.css">  <!-- подключение CSS -->
 </head>
 <body>
 
@@ -15,9 +15,17 @@
     </div>
 
     <div id="equipment-results-container">
-        <!-- результаты поиска -->
+        <!-- сюда будут выводиться карточки поиска -->
     </div>
 
+    <!-- Модальное окно полного списка -->
+    <div id="fullListModal">
+        <div id="fullListModalContent">
+            <span id="fullListModalClose" class="modal-close">&times;</span>
+            <h2>Полный список оборудования</h2>
+            <div id="fullListResults"></div>
+        </div>
+    </div>
 
     <script src="script.js"></script>  <!-- подключение JS -->
 </body>
